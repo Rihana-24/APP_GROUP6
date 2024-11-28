@@ -1,10 +1,9 @@
 numpy
-bs4
-requests
-scipy
-matplotlib
+streamlit 
 pandas
-streamlit
-seaborn
+bs4 
+requests
+plotly.express 
 pybase64
+pyarrow
 
