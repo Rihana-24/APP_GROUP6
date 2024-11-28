@@ -2,14 +2,17 @@
 """ Created on Thu Nov 28 00:24:43 2024
 @author: HP-PC
 """
-
+#Import packages
+import numpy as np
 import streamlit as st
 import pandas as pd
 from bs4 import BeautifulSoup as bs
 import requests
-import numpy as np
 import plotly.express as px
-
+import base64
+import pyarrow
+import streamlit.components.v1 as components
+#Describe the app functions
 st.markdown("<h1 style='text-align: center; color: blue;'>DATA COLLECTION APP</h1>", unsafe_allow_html=True)
 st.markdown("""
 This app allows scraping data using BeautifulSoup, to download scraped data on vetements-hommes, chaussures-hommes, vetements-enfants, and chaussures-enfants.
@@ -21,6 +24,26 @@ This app allows scraping data using BeautifulSoup, to download scraped data on v
   - [chaussures-enfants](https://sn.coinafrique.com/categorie/chaussures-enfants)
 """)
 
+
+# Background function to set an image as the background
+def add_bg_from_local(image_file):
+    with open(image_file, "rb") as image_file:
+            encoded_string = base64.b64encode(image_file.read())
+    st.markdown(
+    f"""
+    <style>
+    .stApp {{
+        background-image: url(data:image/{"jpg"};base64,{encoded_string.decode()});
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+    )
+# Add the background image
+add_bg_from_local("img_file.jpg")   
 @st.cache_data
 def convert_df(df):
     """Convert a dataframe to a CSV format encoded in UTF-8."""
@@ -221,4 +244,7 @@ elif Choices == 'Dashboard of the data':
     st.plotly_chart(fig4_box)
 
 else:
-     st.markdown("<iframe src=\"https://ee.kobotoolbox.org/i/kSxcH0CN\" width=\"800\" height=\"600\"></iframe>", unsafe_allow_html=True)
+   components.html("""<st.markdown("<iframe src=\"https://ee.kobotoolbox.org/i/kSxcH0CN\" width=\"800\" height=\"600\"></iframe>", unsafe_allow_html=True)
+  """,height=1100,width=800)
+
+     
